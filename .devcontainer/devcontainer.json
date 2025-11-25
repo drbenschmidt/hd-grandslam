@@ -1,0 +1,20 @@
+{
+    "name": "C++ Minimal (Clang + CMake + Conan)",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-vscode.cpptools",
+          "ms-vscode.cmake-tools",
+          "twxs.cmake",
+          "ms-vscode.cpptools-extension-pack",
+          "ms-vscode.remote-containers"
+        ]
+      }
+    },
+    "remoteUser": "vscode",
+    "postCreateCommand": "conan profile detect --force"
+  }
+  
