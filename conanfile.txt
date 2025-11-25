@@ -1,0 +1,16 @@
+[requires]
+ffmpeg/6.1
+cpr/1.10.0
+nlohmann_json/3.11.2
+crowcpp-crow/1.3.0
+spdlog/1.13.0
+fmt/10.2.1
+asio/1.29.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+ffmpeg/*:shared=False
+cpr/*:with_ssl=auto
