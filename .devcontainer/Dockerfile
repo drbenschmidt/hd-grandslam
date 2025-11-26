@@ -14,7 +14,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     software-properties-common \
     gnupg \
-    && rm -rf /var/lib/apt/lists/*
+    libva-dev \
+    libvdpau-dev
+
+# # install XCB stack
+# RUN apt-get update && apt-get install -y \
+#     xorg-dev \
+#     libxcb-util-dev \
+#     libxcb-icccm4-dev \
+#     libxcb-image0-dev \
+#     libxcb-keysyms1-dev \
+#     libxcb-render-util0-dev \
+#     libxcb-xkb-dev \
+#     uuid-dev
 
 # Add LLVM official repo (Clang 19 example)
 RUN wget https://apt.llvm.org/llvm.sh && \
@@ -22,12 +34,20 @@ RUN wget https://apt.llvm.org/llvm.sh && \
     ./llvm.sh 19 && \
     rm llvm.sh
 
+# Register toolchain so VS Code + CMake can find it
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 100 && \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 100 && \
+    update-alternatives --install /usr/bin/lldb lldb /usr/bin/lldb-19 100 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/clang-19 100 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-19 100
+
 # Install build tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     ninja-build \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    build-essential \
+    pkg-config \
+    git
 
 # Create user
 ARG USERNAME=vscode
@@ -35,7 +55,9 @@ ARG USER_UID=1000
 ARG USER_GID=1000
 
 RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && usermod -aG sudo $USERNAME \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER $USERNAME
 
