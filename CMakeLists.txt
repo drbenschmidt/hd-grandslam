@@ -3,11 +3,11 @@ project(hd-grandslam LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+# include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
 
 find_package(cpr REQUIRED)
 find_package(nlohmann_json REQUIRED)
-find_package(CrowCpp REQUIRED)
+find_package(Crow REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(fmt REQUIRED)
 find_package(FFmpeg REQUIRED COMPONENTS avformat avcodec avutil swscale)

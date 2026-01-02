@@ -1,0 +1,13 @@
+[settings]
+os=Linux
+arch=x86_64
+build_type=Release
+
+compiler=gcc
+compiler.version=13
+compiler.libcxx=libstdc++
+compiler.cppstd=17
+
+[conf]
+tools.system.package_manager:mode=install
+tools.system.package_manager:sudo=True
