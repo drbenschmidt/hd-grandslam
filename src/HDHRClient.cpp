@@ -36,7 +36,7 @@ std::vector<ChannelInfo> HDHRClient::get_lineup(const std::string &device_ip)
         c.GuideName = item.value("GuideName", "");
         c.GuideNumber = item.value("GuideNumber", "");
         c.URL = item.value("URL", "");
-        c.HD = item.value("HD", false);
+        c.HD = item.value("HD", 0);
         out.push_back(std::move(c));
     }
     return out;
