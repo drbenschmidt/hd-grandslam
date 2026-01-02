@@ -26,10 +26,10 @@ target_link_libraries(hdhr_streamer PRIVATE
     Crow::Crow
     spdlog::spdlog
     fmt::fmt
-    FFmpeg::avformat
-    FFmpeg::avcodec
-    FFmpeg::avutil
-    FFmpeg::swscale
+    ffmpeg::avformat
+    ffmpeg::avcodec
+    ffmpeg::avutil
+    ffmpeg::swscale
 )
 
 # platform-specific: on Windows link ws2_32
