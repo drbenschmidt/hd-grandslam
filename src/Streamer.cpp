@@ -19,9 +19,9 @@ static int avio_write_packet(void* opaque, uint8_t* buf, int buf_size) {
     if (!ctx || !ctx->res) return AVERROR(EIO);
 
     try {
-        ctx->res->write(reinterpret_cast<const char*>(buf),
-                        static_cast<size_t>(buf_size));
-        ctx->res->flush();
+        ctx->res->write(std::string(reinterpret_cast<const char*>(buf),
+                        static_cast<size_t>(buf_size)));
+        // ctx->res->flush();
     } catch (...) {
         return AVERROR(EIO);
     }
@@ -30,7 +30,7 @@ static int avio_write_packet(void* opaque, uint8_t* buf, int buf_size) {
 }
 
 // No seeking in HTTP live streams
-static int avio_seek_packet(void*, int64_t, int) {
+static int64_t avio_seek_packet(void*, int64_t, int) {
     return -1;
 }
 

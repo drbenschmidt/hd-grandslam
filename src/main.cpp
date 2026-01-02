@@ -1,6 +1,10 @@
 #include <crow.h>
 #include <thread>
 #include <array>
+#include "HDHRClient.h"
+#include "Streamer.h"
+#include "spdlog/spdlog.h"
+#include <nlohmann/json.hpp>
 
 int main(int argc, char **argv)
 {
@@ -37,17 +41,16 @@ int main(int argc, char **argv)
 
     // Stream endpoint: /stream/<device_id>/<channel>
     CROW_ROUTE(app, "/stream/<string>/<string>")
-    ([&hdhr](const std::string& device_id, const std::string& channel) {
+    ([&client](const std::string& device_id, const std::string& channel) {
         crow::response res;
+        
         res.code = 200;
-
-        // streaming headers
         res.set_header("Content-Type", "video/mp4");
         res.set_header("Connection", "close");
-        res.manual_write(); // allow incremental writes
 
         // Build HDHR stream URL
-        std::string url = hdhr.stream_url(device_id, channel);
+        // std::string url = client.stream_url(device_id, channel);
+        std::string url = "http://192.168.1.167:5004/auto/" + channel;
 
         Streamer streamer;
         streamer.stream_via_libav(url, res);
